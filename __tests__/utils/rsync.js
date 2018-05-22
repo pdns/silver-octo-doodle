@@ -75,7 +75,4 @@ describe('rsync()', () => {
     await expect(rsync(args)).rejects.toThrow();
   });
 
-  test('...', () => {
-    expect(false).toBe(true);
-  });
 });
