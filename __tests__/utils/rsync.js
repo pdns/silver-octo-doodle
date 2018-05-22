@@ -74,5 +74,4 @@ describe('rsync()', () => {
     delete args.identityFile;
     await expect(rsync(args)).rejects.toThrow();
   });
-
 });
