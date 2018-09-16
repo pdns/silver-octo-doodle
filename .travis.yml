@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - "node"
+env:
+  - BACKEND="${TRAVIS_BUILD_DIR}/backend"
+install:
+  - cd "$BACKEND" && npm install
 script:
-  - npm run --silent eslint
-  - npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cd "$BACKEND" && npm run --silent eslint
+  - cd "$BACKEND" && npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
