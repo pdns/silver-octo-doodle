@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
@@ -11,9 +12,15 @@ database.initialize().then(() => {
   const app = new Koa();
   const router = new Router();
 
+  const schemaText = graphql.printSchema(graphqlSchema);
+  fs.writeFile('schema.graphql', schemaText, (err) => {
+    if (err) console.log(err);
+  });
+
   app.use(bodyParser());
   router.post('/graphql', async (ctx) => {
-    ctx.body = await graphql.graphql(graphqlSchema, ctx.request.body.query);
+    const { query, variables } = ctx.request.body.query;
+    ctx.body = await graphql.graphql(graphqlSchema, query, undefined, undefined, variables);
   });
 
   app.use(router.routes());
