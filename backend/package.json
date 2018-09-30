@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "app.js",
+  "private": true,
   "scripts": {
     "eslint": "eslint .",
     "test": "jest --coverage"
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "graphql": "^14.0.0",
+    "graphql-relay": "^0.5.5",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",

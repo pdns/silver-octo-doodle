@@ -22,6 +22,17 @@ const gqlHost = new graphql.GraphQLObjectType({
 });
 /* eslint-enable global-require */
 
+const gqlHostInput = new graphql.GraphQLInputObjectType({
+  name: 'HostInput',
+  fields: {
+    name: { type: graphql.GraphQLString },
+    user: { type: graphql.GraphQLString },
+    address: { type: graphql.GraphQLString },
+    port: { type: graphql.GraphQLInt },
+    identityFile: { type: graphql.GraphQLString },
+  },
+});
+
 const queries = {
   getHosts: {
     type: new graphql.GraphQLList(gqlHost),
@@ -41,13 +52,9 @@ const mutations = {
   createHost: {
     type: gqlHost,
     args: {
-      name: { type: graphql.GraphQLString },
-      user: { type: graphql.GraphQLString },
-      address: { type: graphql.GraphQLString },
-      port: { type: graphql.GraphQLInt },
-      identityFile: { type: graphql.GraphQLString },
+      input: { type: gqlHostInput },
     },
-    resolve: (_, data) => hosts.createHost(data),
+    resolve: (_, data) => hosts.createHost(data.input),
   },
 
 };
