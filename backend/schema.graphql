@@ -1,0 +1,135 @@
+input CreateHostInput {
+  name: String
+  user: String
+  address: String
+  port: Int
+  identityFile: String
+  clientMutationId: String
+}
+
+type CreateHostPayload {
+  hostEdge: HostEdge
+  viewer: User
+  clientMutationId: String
+}
+
+input CreateTargetInput {
+  name: String
+  from: String
+  to: String
+  hostId: ID
+  clientMutationId: String
+}
+
+type CreateTargetPayload {
+  targetEdge: TargetEdge
+  viewer: User
+  clientMutationId: String
+}
+
+type Host implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  user: String
+  address: String
+  port: Int
+  identityFile: String
+  targets(after: String, first: Int, before: String, last: Int): TargetConnection
+  targetCount: Int
+}
+
+"""A connection to a list of items."""
+type HostConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [HostEdge]
+}
+
+"""An edge in a connection."""
+type HostEdge {
+  """The item at the end of the edge"""
+  node: Host
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Mutation {
+  createHost(input: CreateHostInput!): CreateHostPayload
+  createTarget(input: CreateTargetInput!): CreateTargetPayload
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: User
+}
+
+type Target implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  from: String
+  to: String
+  enabled: Boolean
+  status: TargetStatus
+  host: Host
+}
+
+"""A connection to a list of items."""
+type TargetConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TargetEdge]
+}
+
+"""An edge in a connection."""
+type TargetEdge {
+  """The item at the end of the edge"""
+  node: Target
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+enum TargetStatus {
+  PASSING
+  FAILING
+  NEW
+}
+
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String
+  hosts(after: String, first: Int, before: String, last: Int): HostConnection
+}

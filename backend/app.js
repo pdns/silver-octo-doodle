@@ -19,7 +19,7 @@ database.initialize().then(() => {
 
   app.use(bodyParser());
   router.post('/graphql', async (ctx) => {
-    const { query, variables } = ctx.request.body.query;
+    const { query, variables } = ctx.request.body;
     ctx.body = await graphql.graphql(graphqlSchema, query, undefined, undefined, variables);
   });
 
@@ -28,5 +28,5 @@ database.initialize().then(() => {
   app.listen(PORT);
   console.log(`Listening on port ${PORT}`);
 }).catch((err) => {
-  throw err;
+  console.log(err);
 });
