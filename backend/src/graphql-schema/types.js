@@ -63,7 +63,8 @@ const HostType = new graphql.GraphQLObjectType({
       args: {
         ...relay.connectionArgs,
       },
-      resolve: async (host, { ...args }) => relay.connectionFromArray(await host.getTargets(), args),
+      resolve: async (host, { ...args }) =>
+        relay.connectionFromArray(await host.getTargets(), args),
     },
     targetCount: {
       type: graphql.GraphQLInt,
