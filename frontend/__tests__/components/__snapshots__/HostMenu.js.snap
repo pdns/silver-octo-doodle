@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HostMenu should render correctly with required props 1`] = `
+Array [
+  <IconButton
+    onClick={[Function]}
+  >
+    <MoreVertIcon />
+  </IconButton>,
+  <Menu
+    anchorEl={null}
+    onClose={[Function]}
+    open={false}
+  >
+    <MenuItem
+      onClick={[Function]}
+    >
+      <ListItemIcon>
+        <AddIcon />
+      </ListItemIcon>
+      <ListItemText
+        primary="Create target"
+      />
+    </MenuItem>
+    <MenuItem
+      onClick={[Function]}
+    >
+      <ListItemIcon>
+        <MagnifyIcon />
+      </ListItemIcon>
+      <ListItemText
+        primary="View details"
+      />
+    </MenuItem>
+  </Menu>,
+]
+`;

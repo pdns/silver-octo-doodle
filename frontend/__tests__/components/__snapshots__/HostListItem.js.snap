@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HostListItem should render correctly with no targets 1`] = `
+Array [
+  <ListItem
+    button={true}
+    onClick={[Function]}
+  >
+    <Avatar>
+      <DesktopIcon />
+    </Avatar>
+    <ListItemText>
+      my-host
+    </ListItemText>
+    <ListItemSecondaryAction>
+      <HostMenu
+        onCreate={[Function]}
+        onView={[Function]}
+      />
+    </ListItemSecondaryAction>
+  </ListItem>,
+  <Dialog
+    fullWidth={true}
+    open={false}
+  >
+    <DialogTitle>
+      Create new target
+    </DialogTitle>
+    <DialogContent>
+      <TargetInputForm
+        defaultHost={
+          Object {
+            "name": "my-host",
+            "targetCount": 0,
+          }
+        }
+        hosts={
+          Array [
+            Object {
+              "name": "my-host",
+              "targetCount": 0,
+            },
+          ]
+        }
+        onCancel={[Function]}
+        onSubmit={[Function]}
+      />
+    </DialogContent>
+  </Dialog>,
+]
+`;
+
+exports[`HostListItem should render correctly with targets 1`] = `
+Array [
+  <ListItem
+    button={true}
+    onClick={[Function]}
+  >
+    <Avatar>
+      <DesktopIcon />
+    </Avatar>
+    <ListItemText>
+      my-host
+    </ListItemText>
+    <ListItemIcon>
+      <ExpandIcon />
+    </ListItemIcon>
+    <ListItemSecondaryAction>
+      <HostMenu
+        onCreate={[Function]}
+        onView={[Function]}
+      />
+    </ListItemSecondaryAction>
+  </ListItem>,
+  <Collapse
+    in={false}
+    timeout="auto"
+    unmountOnExit={true}
+  >
+    <TargetList
+      host={
+        Object {
+          "name": "my-host",
+          "targetCount": 9,
+        }
+      }
+    />
+  </Collapse>,
+  <Dialog
+    fullWidth={true}
+    open={false}
+  >
+    <DialogTitle>
+      Create new target
+    </DialogTitle>
+    <DialogContent>
+      <TargetInputForm
+        defaultHost={
+          Object {
+            "name": "my-host",
+            "targetCount": 9,
+          }
+        }
+        hosts={
+          Array [
+            Object {
+              "name": "my-host",
+              "targetCount": 9,
+            },
+          ]
+        }
+        onCancel={[Function]}
+        onSubmit={[Function]}
+      />
+    </DialogContent>
+  </Dialog>,
+]
+`;

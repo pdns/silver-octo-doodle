@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TargetListItem should render correctly 1`] = `
+<ListItem
+  button={true}
+>
+  <ListItemIcon>
+    <TargetIcon />
+  </ListItemIcon>
+  <ListItemText
+    inset={true}
+    primary="target name"
+  />
+</ListItem>
+`;

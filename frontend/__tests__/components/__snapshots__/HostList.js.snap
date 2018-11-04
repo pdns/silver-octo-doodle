@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HostList should render correctly with hosts 1`] = `
+Array [
+  <ListItem
+    button={true}
+    onClick={[Function]}
+  >
+    <ListItemIcon>
+      <AddIcon />
+    </ListItemIcon>
+    <ListItemText
+      primary="Create host"
+    />
+  </ListItem>,
+  <Divider />,
+  <Dialog
+    fullWidth={true}
+    open={false}
+  >
+    <DialogTitle>
+      Create new host
+    </DialogTitle>
+    <DialogContent>
+      <HostInputForm
+        onCancel={[Function]}
+        onSubmit={[Function]}
+      />
+    </DialogContent>
+  </Dialog>,
+  <List>
+    <HostListItem
+      host={
+        Object {
+          "id": "1",
+        }
+      }
+    />
+  </List>,
+]
+`;
+
+exports[`HostList should render correctly with no hosts 1`] = `
+Array [
+  <ListItem
+    button={true}
+    onClick={[Function]}
+  >
+    <ListItemIcon>
+      <AddIcon />
+    </ListItemIcon>
+    <ListItemText
+      primary="Create host"
+    />
+  </ListItem>,
+  <Divider />,
+  <Dialog
+    fullWidth={true}
+    open={false}
+  >
+    <DialogTitle>
+      Create new host
+    </DialogTitle>
+    <DialogContent>
+      <HostInputForm
+        onCancel={[Function]}
+        onSubmit={[Function]}
+      />
+    </DialogContent>
+  </Dialog>,
+  <List />,
+]
+`;
