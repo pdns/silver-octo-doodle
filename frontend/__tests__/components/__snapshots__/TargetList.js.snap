@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TargetList should render correctly 1`] = `
+<List
+  component="div"
+  disablePadding={true}
+>
+  <TargetListItem
+    target={
+      Object {
+        "id": "1",
+      }
+    }
+  />
+  <TargetListItem
+    target={
+      Object {
+        "id": "2",
+      }
+    }
+  />
+</List>
+`;

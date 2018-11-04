@@ -1,0 +1,4 @@
+{
+  "plugins": ["relay", "transform-class-properties"],
+  "presets": ["@babel/preset-env", "@babel/react"]
+}
