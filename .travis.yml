@@ -3,6 +3,7 @@ node_js:
   - "node"
 env:
   - BACKEND="${TRAVIS_BUILD_DIR}/backend"
+  - FRONTEND="${TRAVIS_BUILD_DIR}/frontend"
 install:
   - cd "$BACKEND" && npm install
   - cd "$FRONTEND" && npm install
