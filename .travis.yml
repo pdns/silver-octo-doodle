@@ -2,10 +2,10 @@ language: node_js
 node_js:
   - "node"
 env:
-  - DIR="backend" PATH="${TRAVIS_BUILD_DIR}/${DIR}"
-  - DIR="frontend" PATH="${TRAVIS_BUILD_DIR}/${DIR}"
+  - DIR="backend" SRCPATH="${TRAVIS_BUILD_DIR}/${DIR}"
+  - DIR="frontend" SRCPATH="${TRAVIS_BUILD_DIR}/${DIR}"
 install:
-  - cd "$PATH" && npm install
+  - cd "$SRCPATH" && npm install
 script:
-  - cd "$PATH" && npm run --silent eslint
-  - cd "$PATH" && npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js $DIR
+  - cd "$SRCPATH" && npm run --silent eslint
+  - cd "$SRCPATH" && npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js $DIR
