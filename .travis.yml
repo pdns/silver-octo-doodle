@@ -5,6 +5,9 @@ env:
   - BACKEND="${TRAVIS_BUILD_DIR}/backend"
 install:
   - cd "$BACKEND" && npm install
+  - cd "$FRONTEND" && npm install
 script:
   - cd "$BACKEND" && npm run --silent eslint
   - cd "$BACKEND" && npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cd "$FRONTEND" && npm run --silent eslint
+  - cd "$FRONTEND" && npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
