@@ -2,10 +2,16 @@ language: node_js
 node_js:
   - "node"
 env:
-  - DIR="backend" SRCPATH="${TRAVIS_BUILD_DIR}/${DIR}"
-  - DIR="frontend" SRCPATH="${TRAVIS_BUILD_DIR}/${DIR}"
+  - BACKEND="${TRAVIS_BUILD_DIR}/backend" FRONTEND="${TRAVIS_BUILD_DIR}/frontend" COV_FILE="coverage/coverage-final.json" MERGE_DIR="tmp" NYC="$BACKEND/node_modules/.bin/nyc" COVERALLS="$BACKEND/node_modules/.bin/coveralls"
+  # - DIR="backend" SRCPATH="${TRAVIS_BUILD_DIR}/${DIR}"
+  # - DIR="frontend" SRCPATH="${TRAVIS_BUILD_DIR}/${DIR}"
 install:
-  - cd "$SRCPATH" && npm install
+  - cd "$BACKEND" && npm install
+  - cd "$FRONTEND" && npm install
 script:
-  - cd "$SRCPATH" && npm run --silent eslint
-  - cd "$SRCPATH" && npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js $DIR
+  - mkdir "${TRAVIS_BUILD_DIR}/tmp"
+  - cd "$BACKEND" && npm run --silent eslint && npm test && cp "$COV_FILE" "../$MERGE_DIR/coverage-backend.json"
+  - cd "$FRONTEND" && npm run --silent eslint && npm test && cp "$COV_FILE" "../$MERGE_DIR/coverage-frontend.json"
+  - cd "${TRAVIS_BUILD_DIR}" && "$NYC" report --report-dir="$MERGE_DIR" --reporter=lcov -t "$MERGE_DIR" && cat "${MERGE_DIR}/lcov.info" | "$COVERALLS"
+  # - cd "$SRCPATH" && npm run --silent eslint
+  # - cd "$SRCPATH" && npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js $DIR
