@@ -31,11 +31,17 @@ class HostInputForm extends React.Component {
 
     Object.keys(this.state.fields).forEach((f) => {
       let { value } = this.state.fields[f];
-      if (typeof value === 'string') value = value.trim();
-      if (f === 'port') value = parseInt(value, 10);
-      const error = value.length < 1;
+      let error;
+      if (typeof value === 'string') {
+        value = value.trim();
+        error = value.length < 1;
+      }
+      if (f === 'port') {
+        value = parseInt(value, 10);
+        error = Number.isNaN(value);
+      }
       atLeastOneError = atLeastOneError || error;
-      newState.fields[f] = { value, error };
+      newState.fields[f] = { value: String(value), error };
     });
 
     if (atLeastOneError) {

@@ -82,7 +82,7 @@ exports[`HostInputForm should render correctly with required props 1`] = `
   <DialogActions>
     <Button
       color="primary"
-      onClick={[Function]}
+      onClick={[MockFunction]}
     >
       Cancel
     </Button>
