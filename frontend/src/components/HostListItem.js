@@ -67,7 +67,7 @@ class HostListItem extends React.Component {
           </ListItemSecondaryAction>
         </ListItem>
         {hasTargets &&
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <Collapse in={open} timeout="auto" unmountOnExit>
             <TargetList host={host} />
           </Collapse>
         }
