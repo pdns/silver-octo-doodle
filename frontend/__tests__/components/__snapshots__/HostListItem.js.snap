@@ -9,8 +9,14 @@ Array [
     <Avatar>
       <DesktopIcon />
     </Avatar>
-    <ListItemText>
-      my-host
+    <ListItemText
+      className="HostListItem-truncateOverflow-1"
+    >
+      <Typography
+        className="HostListItem-truncateOverflow-1"
+      >
+        my-host
+      </Typography>
     </ListItemText>
     <ListItemSecondaryAction>
       <HostMenu
@@ -30,6 +36,7 @@ Array [
       <TargetInputForm
         defaultHost={
           Object {
+            "id": "my-host-id",
             "name": "my-host",
             "targetCount": 0,
           }
@@ -37,6 +44,7 @@ Array [
         hosts={
           Array [
             Object {
+              "id": "my-host-id",
               "name": "my-host",
               "targetCount": 0,
             },
@@ -59,8 +67,14 @@ Array [
     <Avatar>
       <DesktopIcon />
     </Avatar>
-    <ListItemText>
-      my-host
+    <ListItemText
+      className="HostListItem-truncateOverflow-1"
+    >
+      <Typography
+        className="HostListItem-truncateOverflow-1"
+      >
+        my-host
+      </Typography>
     </ListItemText>
     <ListItemIcon>
       <ExpandIcon />
@@ -80,6 +94,7 @@ Array [
     <TargetList
       host={
         Object {
+          "id": "my-host-id",
           "name": "my-host",
           "targetCount": 9,
         }
@@ -97,6 +112,7 @@ Array [
       <TargetInputForm
         defaultHost={
           Object {
+            "id": "my-host-id",
             "name": "my-host",
             "targetCount": 9,
           }
@@ -104,6 +120,7 @@ Array [
         hosts={
           Array [
             Object {
+              "id": "my-host-id",
               "name": "my-host",
               "targetCount": 9,
             },

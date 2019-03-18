@@ -1,22 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
-import Dialog from '@material-ui/core/Dialog';
-import Collapse from '@material-ui/core/Collapse';
-import ListItem from '@material-ui/core/ListItem';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogContent from '@material-ui/core/DialogContent';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ExpandIcon from '@material-ui/icons/ExpandMore';
-import CollapseIcon from '@material-ui/icons/ExpandLess';
+import { connect } from 'react-redux';
+import {
+  withStyles,
+  Avatar,
+  Collapse,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemSecondaryAction,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Typography,
+} from '@material-ui/core';
+import {
+  ExpandMore as ExpandIcon,
+  ExpandLess as CollapseIcon,
+} from '@material-ui/icons';
 import DesktopIcon from 'mdi-material-ui/DesktopClassic';
-import { graphql, createFragmentContainer } from 'react-relay';
 import TargetList from './TargetList';
 import HostMenu from './HostMenu';
 import TargetInputForm from './TargetInputForm';
-import CreateTargetMutation from '../mutations/CreateTargetMutation';
+import { createTarget } from '../redux/actions';
+
+const styles = {
+  truncateOverflow: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+};
 
 class HostListItem extends React.Component {
   constructor(props) {
@@ -40,12 +54,15 @@ class HostListItem extends React.Component {
   }
 
   handleCreate = (input) => {
-    CreateTargetMutation.commit(this.props.relay.environment, input);
+    this.props.createTarget({
+      variables: input,
+      context: { hostId: this.props.host.id },
+    });
     this.closeDialog();
   }
 
   render() {
-    const { host } = this.props;
+    const { host, classes } = this.props;
     const { open } = this.state;
     const hasTargets = host.targetCount > 0;
     const icon = open ? <CollapseIcon /> : <ExpandIcon />;
@@ -56,7 +73,11 @@ class HostListItem extends React.Component {
           <Avatar>
             <DesktopIcon />
           </Avatar>
-          <ListItemText>{host.name}</ListItemText>
+          <ListItemText className={classes.truncateOverflow}>
+            <Typography className={classes.truncateOverflow}>
+              {host.name}
+            </Typography>
+          </ListItemText>
           {hasTargets &&
             <ListItemIcon>
               {icon}
@@ -91,17 +112,15 @@ class HostListItem extends React.Component {
 
 HostListItem.propTypes = {
   host: PropTypes.object.isRequired,
-  relay: PropTypes.any,
+  createTarget: PropTypes.func,
+  classes: PropTypes.object,
 };
 
-export default createFragmentContainer(
-  HostListItem,
-  graphql`
-    fragment HostListItem_host on Host {
-      id
-      name
-      targetCount
-      ...TargetList_host
-    }
-  `,
-);
+const mapDispatchToProps = {
+  createTarget,
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(withStyles(styles)(HostListItem));

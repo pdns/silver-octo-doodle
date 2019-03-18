@@ -1,37 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql, QueryRenderer } from 'react-relay';
-import environment from '../relay-environment';
+import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import HostList from '../components/HostList';
+import ErrorSnackbar from '../components/ErrorSnackbar';
+import { getHostList, dismissError } from '../redux/actions';
 
-function SidePanel() {
-  return (
-    <QueryRenderer
-      environment={environment}
-      query={graphql`
-        query SidePanelQuery {
-          viewer {
-            id
-            ...HostList_userHostData
-          }
-        }
-      `}
-      variables={{}}
-      render={({ error, props }) => {
-        if (error) {
-          return <div>Error!</div>;
-        }
-        if (!props) {
-          return <div>Loading...</div>;
-        }
-        return <HostList userHostData={props.viewer}/>;
-      }}
-    />
-  );
+class SidePanel extends React.Component {
+  componentDidMount() {
+    this.props.getHostList();
+  }
+
+  render() {
+    const { summary, create } = this.props.hosts;
+    if (summary.errors) {
+      // TODO: Nicer-looking error
+      return <p>{summary.errors.map(e => e.message)}</p>;
+    } else if (!summary.data || summary.isPending === true) {
+      return <CircularProgress />;
+    }
+    return (
+      <React.Fragment>
+        <HostList hosts={summary.data} />
+        <ErrorSnackbar errors={create.errors} onClose={this.props.dismissError}/>
+      </React.Fragment>
+    );
+  }
 }
 
 SidePanel.propTypes = {
-  viewer: PropTypes.any,
+  hosts: PropTypes.object,
+  getHostList: PropTypes.func,
+  dismissError: PropTypes.func,
 };
 
-export default SidePanel;
+const mapStateToProps = ({ hosts }) => ({ hosts });
+const mapDispatchToProps = {
+  getHostList,
+  dismissError,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SidePanel);

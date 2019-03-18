@@ -41,7 +41,7 @@ class HostInputForm extends React.Component {
         error = Number.isNaN(value);
       }
       atLeastOneError = atLeastOneError || error;
-      newState.fields[f] = { value: String(value), error };
+      newState.fields[f] = { value, error };
     });
 
     if (atLeastOneError) {

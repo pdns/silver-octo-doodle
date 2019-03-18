@@ -4,12 +4,11 @@ import renderer from 'react-test-renderer';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import HostList from '../../src/components/HostList';
-import CreateHostMutation from '../../src/mutations/CreateHostMutation';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-jest.mock('react-relay', () => ({
-  createFragmentContainer: x => x,
+jest.mock('react-redux', () => ({
+  connect: () => x => x,
 }));
 
 jest.mock('@material-ui/core/List', () => 'List');
@@ -24,40 +23,34 @@ jest.mock('@material-ui/icons/Add', () => 'AddIcon');
 
 jest.mock('../../src/components/HostListItem', () => 'HostListItem');
 jest.mock('../../src/components/HostInputForm', () => 'HostInputForm');
-jest.mock('../../src/mutations/CreateHostMutation', () => ({ commit: jest.fn(() => ({})) }));
 
 describe('HostList', () => {
+  const createHostMock = jest.fn();
   let data;
-  let relay;
   let wrapper;
 
   beforeEach(() => {
     data = {
-      hosts: {
-        edges: [
-          { node: { id: '1' } },
-        ],
-      },
+      edges: [
+        { node: { id: '1' } },
+      ],
     };
 
-    relay = {
-      environment: 'relay-env',
-    };
-
-    wrapper = shallow(<HostList userHostData={data} relay={relay} />);
+    createHostMock.mockReset();
+    wrapper = shallow(<HostList hosts={data} createHost={createHostMock}/>);
   });
 
   it('should render correctly with no hosts', () => {
-    data.hosts.edges = [];
+    data.edges = [];
     const tree = renderer
-      .create(<HostList userHostData={data} relay={relay} />)
+      .create(<HostList hosts={data} />)
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('should render correctly with hosts', () => {
     const tree = renderer
-      .create(<HostList userHostData={data} relay={relay} />)
+      .create(<HostList hosts={data} />)
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -74,10 +67,10 @@ describe('HostList', () => {
     expect(wrapper.find('Dialog').prop('open')).toBe(false);
   });
 
-  it('should call CreateHostMutation.commit and close Dialog by calling function passed to HostInputForm', () => {
+  it('should call props.createHost and close Dialog by calling function passed to HostInputForm', () => {
     wrapper.find('ListItem').simulate('click');
     wrapper.find('HostInputForm').prop('onSubmit')('yay');
-    expect(CreateHostMutation.commit).toHaveBeenCalledWith(relay.environment, 'yay');
+    expect(createHostMock).toHaveBeenCalledWith({ variables: 'yay' });
     expect(wrapper.find('Dialog').prop('open')).toBe(false);
   });
 });
