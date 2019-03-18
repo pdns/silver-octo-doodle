@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
@@ -9,10 +10,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogContent from '@material-ui/core/DialogContent';
 import AddIcon from '@material-ui/icons/Add';
-import { graphql, createFragmentContainer } from 'react-relay';
 import HostListItem from './HostListItem';
 import HostInputForm from './HostInputForm';
-import CreateHostMutation from '../mutations/CreateHostMutation';
+import { createHost } from '../redux/actions';
 
 class HostList extends React.Component {
   constructor(props) {
@@ -29,12 +29,12 @@ class HostList extends React.Component {
   }
 
   handleCreate = (input) => {
-    CreateHostMutation.commit(this.props.relay.environment, input);
+    this.props.createHost({ variables: input });
     this.handleClose();
   }
 
   render() {
-    const hostsItems = this.props.userHostData.hosts.edges.map(e =>
+    const hostsItems = this.props.hosts.edges.map(e =>
       <HostListItem key={e.node.id} host={e.node} />);
 
     return (
@@ -63,22 +63,12 @@ class HostList extends React.Component {
 }
 
 HostList.propTypes = {
-  userHostData: PropTypes.object.isRequired,
-  relay: PropTypes.any,
+  hosts: PropTypes.object.isRequired,
+  createHost: PropTypes.func,
 };
 
-export default createFragmentContainer(
-  HostList,
-  graphql`
-    fragment HostList_userHostData on User {
-      hosts(first: 2147483647) @connection(key: "HostList_hosts") {
-        edges {
-          node {
-            id
-            ...HostListItem_host
-          }
-        }
-      }
-    }
-  `,
-);
+const mapDispatchToProps = {
+  createHost,
+};
+
+export default connect(null, mapDispatchToProps)(HostList);

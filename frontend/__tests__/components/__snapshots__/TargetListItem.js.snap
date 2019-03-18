@@ -8,8 +8,14 @@ exports[`TargetListItem should render correctly 1`] = `
     <TargetIcon />
   </ListItemIcon>
   <ListItemText
+    className="TargetListItem-truncateOverflow-1"
     inset={true}
-    primary="target name"
-  />
+  >
+    <Typography
+      className="TargetListItem-truncateOverflow-1"
+    >
+      target name
+    </Typography>
+  </ListItemText>
 </ListItem>
 `;

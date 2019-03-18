@@ -3,10 +3,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import TargetList from '../../src/components/TargetList';
 
-jest.mock('react-relay', () => ({
-  createFragmentContainer: x => x,
-}));
-
 jest.mock('@material-ui/core/List', () => 'List');
 
 jest.mock('../../src/components/TargetListItem', () => 'TargetListItem');

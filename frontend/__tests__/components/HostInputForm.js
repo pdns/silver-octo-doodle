@@ -55,7 +55,7 @@ describe('HostInputForm', () => {
     const expectedArgument = {};
     validCases.forEach((field) => {
       wrapper.find(field.componentType).at(field.componentIndex).simulate('change', { target: { value: field.newValue } });
-      expectedArgument[field.name] = String(field.newValue);
+      expectedArgument[field.name] = field.newValue;
     });
     wrapper.find('Button').at(1).simulate('click');
     expect(onSubmitFunc).toHaveBeenCalledWith(expectedArgument);
